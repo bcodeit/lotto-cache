@@ -10,7 +10,11 @@ const SLEEP_MS = Number(process.env.SLEEP_MS || 300); // 연속 호출 완화
 
 async function ensureDirs() { await fs.mkdir(ROUNDS_DIR, { recursive: true }); }
 async function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
-
+function guessRoundByWeek() {
+  const first = Date.parse("2002-12-07T11:35:00Z"); // 20:35 KST
+  const weeks = Math.floor((Date.now() - first) / (7 * 24 * 3600 * 1000));
+  return weeks + 1;
+}
 async function fetchRound(n) {
   const url = `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${n}`;
   const res = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 GH-Actions" } });

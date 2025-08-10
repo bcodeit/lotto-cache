@@ -53,7 +53,7 @@ async function discoverLatest(startGuess=1200){
 (async ()=>{
   await ensureDirs();
   const start = await detectStartRound();
-  const latest = await discoverLatest(Math.max(start, 1200));
+const latest = await discoverLatest(Math.max(start, guessRoundByWeek() - 2));
   console.log(`backfill ${start}..${latest}`);
   for (let n=start; n<=latest; n++){
     const data = await fetchRound(n);
